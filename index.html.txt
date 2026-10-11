@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Herbert Steibs literarische Raritäten · Berichte aus dem Magazin der Literatur</title>
+    <style>
+      :root {
+        --paper: #f3ecdd;
+        --card: #fbf6ea;
+        --ink: #26211a;
+        --muted: #7a6f5d;
+        --line: #d8ccb2;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: Georgia, "Times New Roman", serif;
+        background:
+          repeating-linear-gradient(0deg, rgba(0,0,0,0.015) 0 2px, transparent 2px 4px),
+          var(--paper);
+        color: var(--ink);
+        line-height: 1.65;
+      }
+      .mono { font-family: "Courier New", Courier, monospace; }
+
+      /* ---------- Kopf ---------- */
+      header.site {
+        border-bottom: 3px double var(--line);
+        background: rgba(251, 246, 234, 0.9);
+        position: sticky; top: 0; z-index: 20;
+      }
+      .navwrap {
+        max-width: 1080px; margin: 0 auto; padding: 14px 24px;
+        display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      }
+      .brand { display: flex; align-items: center; gap: 12px; }
+      .brand svg { flex: none; }
+      .brand .name { font-size: 1.15rem; letter-spacing: 0.06em; }
+      .brand .name b { font-weight: normal; }
+      nav a {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em;
+        color: var(--muted); text-decoration: none; margin-left: 18px;
+        border-bottom: 1px dotted transparent; padding-bottom: 2px;
+      }
+      nav a:hover { color: var(--ink); border-color: var(--ink); }
+
+      /* ---------- Hero: der Katalogzettel des Blogs ---------- */
+      .hero { max-width: 1080px; margin: 0 auto; padding: 56px 24px 24px; }
+      .catalog-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        box-shadow: 0 2px 0 rgba(38,33,26,0.08), 0 14px 30px -18px rgba(38,33,26,0.4);
+        padding: 40px 44px 34px;
+        position: relative;
+      }
+      .catalog-card::before {
+        content: ""; position: absolute; inset: 8px;
+        border: 1px solid rgba(38,33,26,0.12); pointer-events: none;
+      }
+      .card-line { border: none; border-top: 1px solid var(--line); margin: 14px 0; }
+      .kicker {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+        color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+      }
+      .hero h1 {
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        font-weight: normal; letter-spacing: 0.01em; margin: 18px 0 10px;
+      }
+      .hero h1 .amp { font-style: italic; }
+      .hero .sub {
+        font-size: 1.12rem; color: #4a4235; max-width: 46em; font-style: italic;
+      }
+      .hero-entry {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.85rem; color: #5c5244; margin-top: 22px;
+        border-top: 1px solid var(--line); padding-top: 16px;
+      }
+      .hero-entry .row { display: flex; gap: 8px; }
+      .hero-entry .label { min-width: 96px; color: var(--muted); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.1em; padding-top: 2px; }
+
+      .stamp {
+        display: inline-block;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.68rem; font-weight: bold; letter-spacing: 0.14em;
+        color: #92332c; border: 2px solid #92332c; border-radius: 3px;
+        padding: 3px 9px 2px; text-transform: uppercase;
+        transform: rotate(-4deg);
+        background: rgba(146,51,44,0.05);
+        white-space: nowrap;
+      }
+      .stamp.right { transform: rotate(3deg); }
+
+      /* ---------- Abschnitte ---------- */
+      main { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+      section { padding: 44px 0 8px; }
+      h2 {
+        font-size: 1.5rem; font-weight: normal; letter-spacing: 0.02em;
+        display: flex; align-items: baseline; gap: 16px; margin-bottom: 6px;
+      }
+      h2 .num {
+        font-family: "Courier New", Courier, monospace; font-size: 0.8rem;
+        color: var(--muted); letter-spacing: 0.1em;
+      }
+      .section-sub { color: var(--muted); font-style: italic; margin-bottom: 26px; max-width: 44em; }
+      .lead p { max-width: 44em; margin-bottom: 14px; }
+      .lead p:last-child { margin-bottom: 0; }
+
+      /* ---------- Besprechungen ---------- */
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 22px; margin-top: 26px; }
+      .card {
+        background: var(--card); border: 1px solid var(--line);
+        box-shadow: 0 1px 0 rgba(38,33,26,0.06);
+        padding: 22px 24px 18px; position: relative;
+        display: flex; flex-direction: column;
+      }
+      .card:nth-child(odd) .stamp { transform: rotate(-3deg); }
+      .card:nth-child(even) .stamp { transform: rotate(2deg); }
+      .card-top {
+        display: flex; justify-content: space-between; align-items: center; gap: 10px;
+        border-bottom: 1px dashed var(--line); padding-bottom: 10px; margin-bottom: 14px;
+      }
+      .sig {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.72rem; letter-spacing: 0.1em; color: var(--muted);
+      }
+      .card h3 { font-size: 1.22rem; font-weight: normal; }
+      .card h3 a { color: inherit; text-decoration: none; }
+      .byline { font-family: "Courier New", Courier, monospace; font-size: 0.78rem; color: var(--muted); margin: 4px 0 14px; }
+      .meta {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px;
+        font-family: "Courier New", Courier, monospace; font-size: 0.74rem;
+        border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+        padding: 10px 0; margin-bottom: 14px;
+      }
+      .meta div { display: flex; gap: 8px; }
+      .meta dt { color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.66rem; padding-top: 2px; white-space: nowrap; }
+      .meta dd { color: var(--ink); }
+      .teaser { font-size: 0.98rem; }
+      .full { display: none; border-top: 1px dashed var(--line); margin-top: 14px; padding-top: 14px; font-size: 0.95rem; }
+      .full p { margin-bottom: 12px; }
+      .full .verdict {
+        font-style: italic; color: #4a4235;
+        border-left: 3px solid #92332c; padding-left: 12px;
+      }
+      .card.open .full { display: block; }
+      .loan-btn {
+        margin-top: auto; align-self: flex-start; margin-top: 16px;
+        font-family: "Courier New", Courier, monospace; font-size: 0.78rem;
+        letter-spacing: 0.08em; text-transform: uppercase;
+        background: transparent; color: var(--ink);
+        border: 1px solid var(--ink); padding: 7px 14px 6px; cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+      }
+      .loan-btn:hover { background: var(--ink); color: var(--card); }
+      .card.open .loan-btn { border-color: #92332c; color: #92332c; }
+      .card.open .loan-btn:hover { background: #92332c; color: var(--card); }
+
+      /* ---------- Signatur des Monats ---------- */
+      .spotlight {
+        background: var(--card); border: 1px solid var(--line);
+        padding: 34px 38px; margin-top: 24px; position: relative;
+        display: grid; grid-template-columns: 1fr; gap: 8px;
+      }
+      .spotlight .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
+      .spotlight h3 { font-size: 1.6rem; font-weight: normal; }
+      .spotlight .byline { margin-bottom: 10px; }
+      .spotlight .text p { max-width: 46em; margin-bottom: 13px; }
+      .spotlight .text p:last-child { margin-bottom: 0; }
+      .spotlight::after {
+        content: "Signatur des Monats";
+        position: absolute; top: -13px; left: 24px;
+        background: var(--ink); color: var(--card);
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+        padding: 4px 12px 3px;
+      }
+
+      /* ---------- Über mich ---------- */
+      .about { display: grid; grid-template-columns: 160px 1fr; gap: 30px; align-items: start; }
+      .portrait {
+        width: 160px; height: 200px; border: 1px solid var(--line);
+        background: var(--card); position: relative;
+        display: flex; align-items: flex-end; justify-content: center;
+        box-shadow: 0 10px 22px -14px rgba(38,33,26,0.5);
+      }
+      .portrait svg { margin-bottom: 8px; }
+      .portrait .cap {
+        position: absolute; top: 8px; left: 8px;
+        font-family: "Courier New", Courier, monospace; font-size: 0.6rem;
+        color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;
+      }
+      .about .text p { max-width: 44em; margin-bottom: 14px; }
+      .about .facts { font-family: "Courier New", Courier, monospace; font-size: 0.8rem; color: var(--muted); margin-top: 8px; }
+
+      /* ---------- Fuß ---------- */
+      footer.site {
+        margin-top: 56px; border-top: 3px double var(--line);
+        background: rgba(251,246,234,0.9);
+      }
+      .footwrap {
+        max-width: 1080px; margin: 0 auto; padding: 26px 24px 34px;
+        display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap;
+        font-family: "Courier New", Courier, monospace; font-size: 0.76rem; color: var(--muted);
+      }
+      .footwrap b { color: var(--ink); font-weight: normal; }
+      #loan-counter { color: #92332c; }
+
+      @media (max-width: 640px) {
+        .catalog-card { padding: 26px 22px; }
+        .about { grid-template-columns: 1fr; }
+        .portrait { display: none; }
+        nav a { margin-left: 10px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site">
+      <div class="navwrap">
+        <div class="brand">
+          <svg width="34" height="26" viewBox="0 0 34 26" fill="none" aria-hidden="true">
+            <rect x="1" y="2" width="14" height="20" rx="1" transform="rotate(-6 1 2)" fill="#fbf6ea" stroke="#26211a"/>
+            <rect x="8" y="4" width="14" height="20" rx="1" transform="rotate(3 8 4)" fill="#f3ecdd" stroke="#26211a"/>
+            <rect x="16" y="1" width="14" height="20" rx="1" transform="rotate(8 16 1)" fill="#fbf6ea" stroke="#26211a"/>
+            <line x1="19" y1="6" x2="27" y2="7.5" stroke="#92332c" stroke-width="1.4"/>
+            <line x1="18.6" y1="10" x2="26.6" y2="11.5" stroke="#92332c" stroke-width="1.4"/>
+          </svg>
+          <span class="name"><b>Herbert Steibs</b> literarische Raritäten</span>
+        </div>
+        <nav>
+          <a href="#manifest">Manifest</a>
+          <a href="#besprechungen">Besprechungen</a>
+          <a href="#monat">Signatur des Monats</a>
+          <a href="#uebermich">Über mich</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="hero">
+      <div class="catalog-card">
+        <div class="kicker">
+          <span>Literaturblog · Laufend erschienen · Nur im Magazin erhältlich</span>
+          <span class="stamp">Ausleihbar</span>
+        </div>
+        <h1>Herbert Steibs <span class="amp">literarische Raritäten</span></h1>
+        <p class="sub">
+          Ich lese, was alle zitieren und niemand aufschlägt: Bücher, die in Abhandlungen
+          herumgeistern, aber in Bibliotheken längst ins Magazin versenkt wurden.
+          Hier werden sie ausgepackt, ausgeklopft und vorgelesen.
+        </p>
+        <hr class="card-line" />
+        <div class="hero-entry">
+          <div class="row"><span class="label">Autor</span><span>Steib, Herbert — Blogger, Leser, Magazinkehrer</span></div>
+          <div class="row"><span class="label">Titel</span><span>Herbert Steibs literarische Raritäten. Berichte aus dem Untergeschoss der Literatur</span></div>
+          <div class="row"><span class="label">Umfang</span><span>unbestimmt · Erschienen: fortlaufend</span></div>
+          <div class="row"><span class="label">Standort</span><span>dieser Bildschirm</span></div>
+          <div class="row"><span class="label">Anmerkung</span><span>Die letzte Ausleihe liegt noch niemandem zurück.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <section id="manifest">
+        <h2><span class="num">01</span>Ein kleines Manifest</h2>
+        <p class="section-sub">Warum es diesen Katalog gibt.</p>
+        <div class="lead">
+          <p>
+            Jede Literaturwissenschaft kennt sie: Bücher, die in jeder Abhandlung vorkommen,
+            in jeder Fußnote herumgeistern — und deren letzte Ausleihe trotzdem über zehn
+            Jahre zurückliegt. Der Zettelkatalog vermerkt sie noch, aber niemand holt sie
+            mehr ab. Irgendwann wandern sie ins Magazin, ins Archiv, in den Keller der
+            Bibliothek. Von dort stammen meine Besprechungen.
+          </p>
+          <p>
+            Mein Verdacht: Diese Bücher werden zitiert, <em>weil</em> sie niemand liest.
+            Ein Zitat aus einem ungelesenen Buch ist besonders sicher — niemand kann widersprechen.
+            Ich widerspreche. Ich hole die Bände ab, lese sie Seite für Seite, Satz für Satz,
+            und berichte, was die Fußnoten verschweigen: ob die berühmte Stelle hält,
+            was die Abhandlungen ihr zuschreiben. Und ob sich der Weg ins Magazin lohnt.
+          </p>
+          <p>
+            Kriterien für die Aufnahme: das Buch muss (a) in literarischen Abhandlungen
+            häufig vorkommen, (b) im wirklichen Lesleben fast nie, und (c) eine Signatur
+            besitzen, unter der es tatsächlich noch auffindbar ist. Das Letzte ist die
+            eigentliche Kunst.
+          </p>
+        </div>
+      </section>
+
+      <section id="besprechungen">
+        <h2><span class="num">02</span>Besprechungen</h2>
+        <p class="section-sub">
+          Zuletzt gehoben aus dem Magazin. Jeder Eintrag trägt Signatur, letzte Ausleihe
+          und Befund. — „Ausleihen“ öffnet die vollständige Besprechung.
+        </p>
+        <div class="grid" id="cards"></div>
+      </section>
+
+      <section id="monat">
+        <h2><span class="num">03</span>Signatur des Monats</h2>
+        <p class="section-sub">Eine Rarität, ausführlicher besprochen. Diesmal: die Mühle.</p>
+        <div class="spotlight">
+          <div class="head">
+            <div>
+              <h3>Pfisters Mühle</h3>
+              <p class="byline">Wilhelm Raabe · 1884 · Untertitel: „Ein Sommerferienheft“</p>
+            </div>
+            <div>
+              <span class="stamp right">Magazin 1</span>
+            </div>
+          </div>
+          <div class="meta">
+            <div><dt>Signatur</dt><dd>MAG 1 / RAA / 1884</dd></div>
+            <div><dt>Letzte Ausleihe</dt><dd>14.09.1999</dd></div>
+            <div><dt>Zustand</dt><dd>Staublese, unbeschrieben</dd></div>
+            <div><dt>Befund</dt><dd>Wird empfohlen</dd></div>
+          </div>
+          <div class="text">
+            <p>
+              In jeder Vorlesung über den poetischen Realismus kommt es vor, in jedem
+              Aufsatz über die „Industrialisierung der deutschen Erzählkunst“ wird es
+              zitiert: Raabes <em>Pfisters Mühle</em>, der deutsche Roman, in dem zum
+              ersten Mal ein Kunstgriff des 20. Jahrhunderts auftaucht — die Umweltzerstörung.
+              Gelesen hat es danach fast niemand. Zu Unrecht.
+            </p>
+            <p>
+              Der Erzähler kauft die alte Mühle seines Vaters als Sommerresidenz zurück —
+              und stellt fest, dass nebenan eine Chemiefabrik steht, deren Abwässer den
+              Bach verändert haben, an dem die Mühle einst ihr Leben hatte. Der Duft der
+              Kindheit ist weg; es riecht nach Industrie. Was wie Idylle beginnt, wird zu
+              einer der frühesten Auseinandersetzungen mit dem, was man heute
+              „Werteverlust“ nennt. Und das alles in der leisen, hintergründig witzigen
+              Tonlage, die Raabe beherrscht wie kaum ein Zweiter.
+            </p>
+            <p>
+              Der Untertitel „Ein Sommerferienheft“ ist übrigens Programm: Der Roman
+              gibt sich als ferienhalbfertige Sommeraufzeichnung des Erzählers, als wäre er
+              ein Tagebuch und kein Literaturwerk. Genau in dieser Bescheidenheit liegt die
+              Pointe — ein Buch über den Verlust einer Welt, das selbst so tut, als wäre es
+              halb im Urlaub entstanden.
+            </p>
+            <p class="verdict">
+              Befund: Die Fabrik ist real, die Mühle auch — aber nur eine davon steht noch
+              im Regal. Abholen, mitnehmen, lesen: Das ist der einzige Weg, Raabes
+              Mühle am Leben zu halten.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="uebermich">
+        <h2><span class="num">04</span>Der Ausleiher</h2>
+        <p class="section-sub">Wer hier schreibt.</p>
+        <div class="about">
+          <div class="portrait">
+            <span class="cap">Leser, o. J.</span>
+            <svg width="90" height="110" viewBox="0 0 90 110" fill="none" aria-hidden="true">
+              <circle cx="45" cy="34" r="16" fill="none" stroke="#26211a" stroke-width="1.4"/>
+              <path d="M12 104 C14 74 76 74 78 104" fill="none" stroke="#26211a" stroke-width="1.4"/>
+              <path d="M30 92 L30 76 M60 92 L60 76" stroke="#26211a" stroke-width="1.2"/>
+              <rect x="26" y="76" width="38" height="16" fill="#fbf6ea" stroke="#26211a" stroke-width="1.2" transform="rotate(-2 45 84)"/>
+              <line x1="31" y1="81" x2="59" y2="81" stroke="#92332c" stroke-width="1.2"/>
+              <line x1="31" y1="86" x2="59" y2="86" stroke="#92332c" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div class="text">
+            <p>
+              <b>Herbert Steib</b> schreibt über Bücher, deren letzte Ausleihe länger
+              zurückliegt als mancher Literaturbegriff existiert. Ausgangspunkt war eine
+              Beobachtung: In jeder Abhandlung der Germanistik treten dieselben Titel auf —
+              und im Ausleihvermerk der Stadtbibliothek stehen sie mit einem Datum aus dem
+              vorigen Jahrtausend. Zwischen beiden Daten liegt ein unerhörtes Schweigen,
+              und genau da setzt dieser Blog an.
+            </p>
+            <p>
+              Ich arbeite mit Bleistift, mit Lesekarte und mit der berechtigten Hoffnung,
+              dass ein Buch, das man einmal wirklich gelesen hat, nie wieder ganz ins
+              Archiv zurückkehrt. Besprochen wird ohne Ehrfurcht, aber mit Respekt vor
+              jedem Satz, der sich deshalb lohnt, weil ihn seit zwanzig Jahren niemand
+              mehr laut gesagt hat.
+            </p>
+            <p class="facts">
+              Standort: vermutlich im Lesesaal · Werkzeug: Bleistift, Radiergummi,
+              Ausleihkarte · Fehlerquelle: möglich · Kontakt: post@literarische-raritaeten.de
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site">
+      <div class="footwrap">
+        <span>© 2026 <b>Herbert Steib</b> · Alle Rechte bei den Bibliotheken, die nichts zurückverlangen.</span>
+        <span>Signatur dieses Blogs: <b>MAG 0 / STB / 2019</b></span>
+        <span>Ausleihen auf dieser Seite: <b id="loan-counter">0</b></span>
+      </div>
+    </footer>
+
+    <script>
+      const reviews = [
+        {
+          sig: "MAG 4 / MUS / 1930",
+          status: "Im Magazin",
+          title: "Der Mann ohne Eigenschaften",
+          author: "Robert Musil · 1930/43 · Roman",
+          lastLoan: "17.04.1996",
+          state: "Lesezeichen bei S. 61",
+          verdict: "Wird empfohlen",
+          teaser:
+            "Das Buch, das jeder besessen und niemand beendet hat. Aus ihm stammt die Hälfte aller Zitate über die Moderne — aber wer hat je über das Kakanien-Kapitel hinausgelesen? Ich habe. Alle Bände. Es hat sich gelohnt.",
+          full: [
+            "Musil schrieb an diesem Roman rund zwei Jahrzehnte, und die Literaturwissenschaft hat es ihm mit durchschnittlich drei Zitaten pro Abhandlung gedankt: die Parallelaktion, das Kakanien, der Gefühlsmensch und der Rechenschaftsmensch. Gelesen hat ihn trotzdem fast niemand. Das Exemplar aus dem Magazin trug ein Lesezeichen bei Seite 61 — vermutlich von einem Germanistikstudenten, der es 1996 beim dritten Kapitel belassen und danach nur noch daraus zitiert hat.",
+            "Die Entdeckung nach 1000 Seiten: Der Witz ist kein Gerücht. Musil ist lustig — trocken, nachdenklich, gelegentlich bösartig. Die berühmten Kapitel halten, was ihr Ruf verspricht. Aber die eigentliche Überraschung sind die stillen Passagen, in denen Musil das Denken selbst als Tageswerk beschreibt: das Probieren von Einstellungen, das Anfassen von Ideen wie von Werkstoff. Das Buch ist weniger ein Roman als eine Anstalt zur Herstellung von Aufmerksamkeit.",
+            "Der Einwand, es sei „unfertig“, stimmt übrigens und ist das Falscheste, was man gegen ihn vorbringen kann: Es ist kein Roman mehr, der enden will, sondern ein Verfahren, das laufen sollte. Magazinstatus: zu Unrecht. Signatur: abholen."
+          ]
+        },
+        {
+          sig: "MAG 4 / JOY / 1939",
+          status: "Im Magazin",
+          title: "Finnegans Wake",
+          author: "James Joyce · 1939 · Traum-Roman",
+          lastLoan: "02.11.1989",
+          state: "Randbemerkungen, Wasserflecken",
+          verdict: "Mit Vorsicht zu empfehlen",
+          teaser:
+            "„riverrun“ — das erste Wort kennen alle. Anschließend steigt die Zitierfreudigkeit steil ab. Ich habe mich durchgekämpft: mit Bleistift, drei Wörterbüchern und der Bereitschaft, beim Lesen zu träumen.",
+          full: [
+            "Kein Buch der Weltliteratur wird häufiger herangezogen und seltener gelesen. Joyce arbeitete siebzehn Jahre daran, überzog die englische Sprache mit Dutzenden anderen, und heraus kam ein Werk, das weniger ein Roman ist als eine nächtliche Durchhalteprobe. In jeder Abhandlung über die Sprache der Moderne dient es als Beleg — meist mit derselben ersten Zeile, die vermutlich die meistzitierte ungelesene Zeile der Literaturgeschichte ist.",
+            "Mein Befund nach einem Sommer im Magazin: Man darf es nicht lesen wie einen Roman. Das „Wake“ funktioniert wie ein Radio, das nachts durch die Wellen rauscht — kein Sender vollständig, aber in jedem Rauschen etwas, das man kennt, ohne es benennen zu können. Wer bereit ist, passiv zu werden, wird belohnt: Die Sätze sind witziger, schlüpfriger und trauriger, als jede Fußnote zugibt.",
+            "Verdict: nicht für jeden — aber für alle, die in Seminaren so tun, als hätten sie es gelesen. Diese Heuchelei habe ich mit diesem Eintrag versenkt."
+          ]
+        },
+        {
+          sig: "MAG 2 / SCH / 1970 · Flachlagerung",
+          status: "Im Magazin",
+          title: "Zettel’s Traum",
+          author: "Arno Schmidt · 1970 · Opus",
+          lastLoan: "09.06.1994",
+          state: "Format 50 × 35 cm",
+          verdict: "Für Fortgeschrittene",
+          teaser:
+            "Das monumentalste Zitierreservoir der deutschen Nachkriegsliteratur — und zugleich das Buch, das in keiner Bibliothek im Regal steht, weil es schlicht zu groß ist. Es liegt flach im Magazin, wie ein schlafendes Tier. Ich habe es geweckt.",
+          full: [
+            "Über kein anderes Buch der deutschen Literatur ist so viel geschrieben worden, das so wenig gelesen wurde. Schmidts 1970 erschienener, auf Schreibmaschinenpapier im Oktavformat gesetzter Zettelkasten von rund 1300 Seiten — dreispaltig, in einem Geflecht aus Erzählstimmen, Anmerkungen und Assoziationen — ist der Lieblingsbeleg jeder Abhandlung über das „experimentierfreudige Erzählen“ nach 1945. Nur: Das Exemplar, das ich abholte, war seit 1994 nicht mehr ausgeliehen.",
+            "Der Rahmen: Zwei Übersetzer, die in einem deutschen Dorf an einer Übertragung von Poe arbeiten, und ihr Gastgeber, der ihnen über die Schulter sieht, denkt und — vor allem — redet. Das Buch ist ein einziges Gespräch über Literatur, Sex, Astronomie und die Frage, wie viel Wahnsinn nötig ist, um die Welt zu beschreiben.",
+            "Keine Sorge, ich empfehle es nicht — ich rapportiere. Aber jeder, der je behauptet hat, er „kenne“ Zettel’s Traum, sollte diesen Eintrag als Aufforderung verstehen: Es ist Zeit, wenigstens einmal hineinzusehen. Blättern zählt schon. Das ist der ehrliche Vorteil des Objekts: Es ist so groß, dass man nicht lesen kann, ohne es zu merken."
+          ]
+        },
+        {
+          sig: "MAG 1 / MOR / 1785",
+          status: "Im Magazin",
+          title: "Anton Reiser",
+          author: "Karl Philipp Moritz · 1785–90 · Psychologischer Roman",
+          lastLoan: "23.02.1998",
+          state: "Vier Bände, unbeschädigt",
+          verdict: "Wird empfohlen",
+          teaser:
+            "In jeder Abhandlung über den Bildungsroman eine Fußnote, in jeder Bibliothek im Magazin. Dabei ist Moritz’ „Anton Reiser“ das eigentliche Fundstück: der erste große deutsche Roman, der das Innenleben ernst nimmt.",
+          full: [
+            "Goethe hat es gelesen, die Romantik hat es verarbeitet, jede Vorlesung über den deutschen Bildungsroman nennt es — meist im Nebensatz. Karl Philipp Moritz erzählt die Geschichte eines Jungen, der sich aus ärmlichen Verhältnissen durch Schulen und Bücher arbeitet, und daraus einen der ersten psychologischen Romane der deutschen Literatur macht: keine Entwicklungsziel-Fantasie, sondern eine Studie darüber, wie ein Mensch von Büchern geformt, verängstigt und getröstet wird.",
+            "Das Wunderbare: Das Buch ist kurz, klar und — ein halbes Vergnügen. Moritz schreibt sachlich und ohne den erzieherischen Zeigefinger, den man von Bildungsromanen erwartet. Anton scheitert regelmäßig, und es ist jede dieser Niederlagen wert, gelesen zu werden. Magazinstatus: ein Skandal. Signatur: abholen."
+          ]
+        },
+        {
+          sig: "MAG 1 / SCHL / 1799",
+          status: "Im Magazin",
+          title: "Lucinde",
+          author: "Friedrich Schlegel · 1799 · Roman",
+          lastLoan: "11.05.1987",
+          state: "Anstreichungen, kritisch",
+          verdict: "Historisch wertvoll",
+          teaser:
+            "Der Skandalroman der Frühromantik: Bei Erscheinen verboten, verrissen, verspottet — heute in jeder Abhandlung über die Romantik präsent und in jeder Bibliothek im Magazin. Ein Buch, das ein Jahrhundert lang zitiert wurde, ohne gelesen zu werden.",
+          full: [
+            "Kein Werk der Romantik ist in den Abhandlungen so allgegenwärtig wie Schlegels „Lucinde“ — und keines ist so selten wirklich gelesen. Das liegt teilweise am Werk selbst: Fragmentarisch aufgebaut, voller Reflexion, zwischen Briefen, Träumereien und Abhandlungen hin- und herspringend, ist es weniger ein Roman als ein literarischer Expansionsversuch.",
+            "Was mich umgehauen hat: die Frechheit. Schlegel schreibt über Liebe, Sexualität und Geschlechterrollen in einem Ton, der 1799 als skandalös galt und heute fast wieder frisch wirkt. Aus dem Magazin holt man ihn nicht für den Roman, sondern für das Dokument einer Generation, die Literatur und Leben zur selben Sache erklären wollte.",
+            "Verdict: weniger lesen als betrachten — aber betrachten sollte man es einmal wirklich. Nicht nur die Fußnote."
+          ]
+        },
+        {
+          sig: "MAG 4 / BRO / 1945",
+          status: "Im Magazin",
+          title: "Der Tod des Vergil",
+          author: "Hermann Broch · 1945 · Roman in Versform",
+          lastLoan: "08.10.2001",
+          state: "Guter Zustand",
+          verdict: "Wird empfohlen",
+          teaser:
+            "Das Buch, über das jede Abhandlung über die Moderne spricht, und das trotzdem kaum jemand aufschlägt: Vergil liegt im Sterben, ringt mit sich und mit der Frage, ob die Dichtung überhaupt gerechtfertigt ist. Broch hat es in fünf Tagen geschrieben — in der Nacht vor der eigenen Verhaftung.",
+          full: [
+            "Die Entstehungsgeschichte dieses Romans ist die dramatischste der deutschen Exilliteratur: Broch begann ihn 1938 in Wiener Gefangenschaft, mit einer tatsächlichen Todesdrohung im Nacken, und vollendete ihn in der amerikanischen Emigration. Diese Herkunft schlägt jedem Satz nach.",
+            "Der Inhalt ist schnell erzählt und schwer ausgehalten: Der sterbende Vergil, auf dem Schiff nach Brundisium, erwägt, das Manuskript der Aeneis zu verbrennen — das schönste Gedicht der Welt, das für ihn zum Beleg geworden ist, dass Dichtung im Angesicht von Leid nichts anderes ist als Ornament. Der ganze Roman ist ein einziges Nachdenken über diese eine Frage, in einem hypnotischen, atemlosen, lang gezogenen Prosastil.",
+            "Magazinbefund: Dieses Buch ist das beste Argument gegen den Magazinstatus überhaupt. Wenn man wissen will, warum Literatur existiert, auch gegen alle Vernunft — hier steht es. Abholen."
+          ]
+        }
+      ];
+
+      const cardsEl = document.getElementById("cards");
+      let loans = 0;
+      const counterEl = document.getElementById("loan-counter");
+
+      reviews.forEach((r, i) => {
+        const art = document.createElement("article");
+        art.className = "card";
+        art.innerHTML = `
+          <div class="card-top">
+            <span class="sig">${r.sig}</span>
+            <span class="stamp">${r.status}</span>
+          </div>
+          <h3>${r.title}</h3>
+          <p class="byline">${r.author}</p>
+          <dl class="meta">
+            <div><dt>Ausleihe</dt><dd>${r.lastLoan}</dd></div>
+            <div><dt>Befund</dt><dd>${r.verdict}</dd></div>
+            <div><dt>Zustand</dt><dd>${r.state}</dd></div>
+            <div><dt>Exemplar</dt><dd>Nr. ${String(i + 1).padStart(2, "0")}</dd></div>
+          </dl>
+          <p class="teaser">${r.teaser}</p>
+          <div class="full">
+            ${r.full.map((p) => `<p>${p}</p>`).join("")}
+          </div>
+          <button class="loan-btn" type="button">Ausleihen (weiterlesen)</button>
+        `;
+        cardsEl.appendChild(art);
+      });
+
+      cardsEl.addEventListener("click", (e) => {
+        const btn = e.target.closest(".loan-btn");
+        if (!btn) return;
+        const card = btn.closest(".card");
+        const opening = !card.classList.contains("open");
+        card.classList.toggle("open", opening);
+        btn.textContent = opening
+          ? "Zurückgeben (einklappen)"
+          : "Ausleihen (weiterlesen)";
+        if (opening) {
+          loans += 1;
+          counterEl.textContent = String(loans);
+        }
+      });
+    </script>
+  </body>
+</html>
